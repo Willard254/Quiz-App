@@ -51,6 +51,7 @@ h3 {
     align-items: center;
     max-width: 80rem;
     margin: 0 auto;
+    padding: 2rem;
 }
 
 .container>* {
@@ -90,7 +91,7 @@ h3 {
     border: 0.1rem solid #56a5eb;
     margin-bottom: 1rem;
     text-decoration: none;
-    color: #5615eb;
+    color: #56a5eb;
     background-color: white;
 }
 
