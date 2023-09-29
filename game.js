@@ -3,6 +3,8 @@ const choices = Array.from(document.getElementsByClassName('choice-text'));
 const progressText = document.getElementById('progressText');
 const scoreText = document.getElementById('score');
 const progressBarFull = document.getElementById('progressBarFull');
+const loader = document.getElementById('loader');
+const game = document.getElementById('game');
 
 let currentQuestion = {};
 let acceptingAnswers = false;
@@ -10,199 +12,38 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 
-let questions = [{
-        question: "Inside whici HTML element do we put the JavaScript ??",
-        choice1: "<script>",
-        choice2: "<javascript>",
-        choice3: "<js>",
-        choice4: "<scripting>",
-        answer: 1
-    },
-    {
-        question: "What is the primary component used for data storage in modern computers?",
-        choice1: "Transistors",
-        choice2: "Vacuum tubes",
-        choice3: "Hard drives",
-        choice4: "Floppy disks",
-        answer: 1
-    },
-    {
-        question: "Which technology is used for wireless communication between devices over short distances?",
-        choice1: "Wi-Fi",
-        choice2: "Bluetooth",
-        choice3: "NFC (Near Field Communication)",
-        choice4: "GPS",
-        answer: 2
-    },
-    {
-        question: "What type of energy do solar panels convert into electricity?",
-        choice1: "Mechanical energy",
-        choice2: "Thermal energy",
-        choice3: "Chemical energy",
-        choice4: "Solar energy",
-        answer: 4
-    },
-    {
-        question: "Which programming language is commonly used for developing mobile applications for iOS devices?",
-        choice1: "Java",
-        choice2: "Swift",
-        choice3: "Python",
-        choice4: "C++",
-        answer: 2
-    },
-    {
-        question: "What technology allows electric cars to recharge their batteries through induction from a charging pad?",
-        choice1: "Plug-in charging",
-        choice2: "Wireless charging",
-        choice3: "Solar charging",
-        choice4: "Hydrogen charging",
-        answer: 2
-    },
-    {
-        question: "Which element is essential for the functioning of lithium-ion batteries?",
-        choice1: "Lithium",
-        choice2: "Copper",
-        choice3: "Aluminum",
-        choice4: "Gold",
-        answer: 1
-    },
-    {
-        question: "What is the term for the process of improving the quality of digital audio or music recordings?",
-        choice1: "Compression",
-        choice2: "Encoding",
-        choice3: "Remastering",
-        choice4: "Decoding",
-        answer: 3
-    },
-    {
-        question: "Which technology is used to create virtual environments that users can interact with?",
-        choice1: "Augmented reality",
-        choice2: "Virtual reality",
-        choice3: "Holography",
-        choice4: "Simulated reality",
-        answer: 2
-    },
-    {
-        question: "In computer graphics, what does GPU stand for?",
-        choice1: "Graphics Processing Unit",
-        choice2: "General Processing Unit",
-        choice3: "Graphical Performance Unit",
-        choice4: "General Productivity Unit",
-        answer: 1
-    },
-    {
-        question: "Which technology allows for high-speed internet access over traditional copper telephone lines?",
-        choice1: "Fiber-optic broadband",
-        choice2: "DSL (Digital Subscriber Line)",
-        choice3: "Satellite internet",
-        choice4: "Dial-up internet",
-        answer: 2
-    },
-    {
-        question: "What is the term for the process of converting sound waves into electrical signals for recording or transmission?",
-        choice1: "Amplification",
-        choice2: "Digitalization",
-        choice3: "Modulation",
-        choice4: "Audio conversion",
-        answer: 3
-    },
-    {
-        question: "Which technology is used for printing physical objects from digital designs?",
-        choice1: "3D printing",
-        choice2: "Laser printing",
-        choice3: "Inkjet printing",
-        choice4: "Offset printing",
-        answer: 1
-    },
-    {
-        question: "Which element is commonly used in the production of computer chips and semiconductors due to its excellent semiconductor properties?",
-        choice1: "Silicon",
-        choice2: "Aluminum",
-        choice3: "Copper",
-        choice4: "Gold",
-        answer: 1
-    },
-    {
-        question: "What is the term for the process of encrypting data to make it secure and unreadable without the proper decryption key?",
-        choice1: "Encoding",
-        choice2: "Compression",
-        choice3: "Decoding",
-        choice4: "Encryption",
-        answer: 4
-    },
-    {
-        question: "Which technology is used to capture and display three-dimensional images or videos?",
-        choice1: "Stereoscopy",
-        choice2: "Holography",
-        choice3: "3D rendering",
-        choice4: "Augmented reality",
-        answer: 2
-    },
-    {
-        question: "What technology allows people to control electronic devices using voice commands?",
-        choice1: "Gesture control",
-        choice2: "Voice recognition",
-        choice3: "Touchscreen technology",
-        choice4: "Haptic feedback",
-        answer: 2
-    },
-    {
-        question: "In the context of networking, what does IP stand for ? ",
-        choice1: "Internet Protocol",
-        choice2: "Intranet Protocol",
-        choice3: "Interconnect Protocol",
-        choice4: "Innovative Protocol",
-        answer: 1
-    },
-    {
-        question: "Which technology is used to transmit data over long distances through thin strands of glass or plastic?",
-        choice1: "DSL",
-        choice2: "Fiber optics",
-        choice3: "Ethernet",
-        choice4: "Coaxial cable",
-        answer: 2
-    },
-    {
-        question: "What is the term for a type of computer virus that disguises itself as a legitimate program or file?",
-        choice1: "Worm",
-        choice2: "Trojan horse",
-        choice3: "Spyware",
-        choice4: "Phishing",
-        answer: 2
-    },
-    {
-        question: "Which technology is used to transmit radio signals for broadcasting?",
-        choice1: "Fiber optics",
-        choice2: "AM (Amplitude Modulation)",
-        choice3: "FM (Frequency Modulation)",
-        choice4: "Bluetooth",
-        answer: 2
-    },
-    {
-        question: "What is the term for the practice of using multiple computer servers to store and manage data?",
-        choice1: "Cloud computing",
-        choice2: "Distributed computing",
-        choice3: "Mainframe computing",
-        choice4: "Quantum computing",
-        answer: 1
-    },
-    {
-        question: "Which device is used to measure the strength and direction of a magnetic field?",
-        choice1: "Thermometer",
-        choice2: "Hygrometer",
-        choice3: "Magnetometer",
-        choice4: "Seismometer",
-        answer: 3
-    },
-    {
-        question: "What technology is used to transmit television signals through the airwaves?",
-        choice1: "Cable TV",
-        choice2: "Satellite TV",
-        choice3: "Analog TV",
-        choice4: "Digital TV",
-        answer: 3
-    }
-]
+let questions = [];
+
+fetch('https://opentdb.com/api.php?amount=50&category=11&difficulty=medium&type=multiple')
+    .then(res => {
+        return res.json();
+    })
+    .then(loadedQuestions => {
+        // console.log(loadedQuestions.results);
+        questions = loadedQuestions.results.map(loadedQuestion => {
+            const formattedQuestion = {
+                question: loadedQuestion.question
+            };
+
+            const answerChoices = [...loadedQuestion.incorrect_answers];
+            formattedQuestion.answer = Math.floor(Math.random() * 3) + 1;
+            answerChoices.splice(
+                formattedQuestion.answer - 1,
+                0,
+                loadedQuestion.correct_answer
+            );
+
+            answerChoices.forEach((choice, index) => {
+                formattedQuestion['choice' + (index + 1)] = choice;
+            });
+
+            return formattedQuestion;
+        });
+        startGame();
+    })
+    .catch(err => {
+        console.error(err);
+    })
 
 //Constants
 const CORRECT_BONUS = 10;
@@ -213,18 +54,21 @@ startGame = () => {
     score = 0;
     availableQuestions = [...questions];
     getNewQuestions();
+    game.classList.remove("hidden");
+    loader.classList.add("hidden");
 }
 
 getNewQuestions = () => {
 
     if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
         // go to end page
+        localStorage.setItem('mostRecentScore', score);
         return window.location.assign('/end.html');
     }
     questionCounter++;
     progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
     //update the progress bar
-    console.log((questionCounter / MAX_QUESTIONS) * 100);
+    // console.log((questionCounter / MAX_QUESTIONS) * 100);
     progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS)* 100}%`;
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestion = availableQuestions[questionIndex];
@@ -267,5 +111,3 @@ incrementScore = num => {
     score += num;
     scoreText.innerText = score;
 }
-
-startGame();
